@@ -1,31 +1,15 @@
-extends Node2D
-
-const PlayerUnitLine: Resource = preload("res://entities/player/player_unit_line.tscn")
-
-onready var units: Node = $Units
+extends Node
 
 ###############################################################################
 # Builtin functions                                                           #
 ###############################################################################
 
 func _ready() -> void:
-	SignalBroadcaster.current_level = self
-	
-	var line: Node2D = PlayerUnitLine.instance()
-	for i in GameManager.unit_layout.size():
-		match i:
-			0:
-				line.unit1 = GameManager.unit_layout[i]
-			1:
-				line.unit2 = GameManager.unit_layout[i]
-			2:
-				line.unit3 = GameManager.unit_layout[i]
-			3:
-				line.unit4 = GameManager.unit_layout[i]
-			_:
-				GameManager.log_message("Unhandled unit layout", true)
-	
-	call_deferred("add_child", line)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action("ui_cancel"):
+		get_tree().quit()
 
 ###############################################################################
 # Connections                                                                 #
@@ -39,4 +23,9 @@ func _ready() -> void:
 # Public functions                                                            #
 ###############################################################################
 
-
+func log_message(message: String, is_error: bool = false) -> void:
+	if is_error:
+		message = "[ERROR] %s" % message
+		assert(false, message)
+	print(message)
+	emit_signal("message_logged", message)

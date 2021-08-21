@@ -1,31 +1,22 @@
-extends Node2D
+class_name BasePlayerUnit
+extends BaseUnit
 
-const PlayerUnitLine: Resource = preload("res://entities/player/player_unit_line.tscn")
+const MIN_MOVE_DISTANCE: float = 1.0
+const MOVE_SPEED: float = 100.0
 
-onready var units: Node = $Units
+var is_current := false
+var position_to := Vector2.ZERO
 
 ###############################################################################
 # Builtin functions                                                           #
 ###############################################################################
 
 func _ready() -> void:
-	SignalBroadcaster.current_level = self
-	
-	var line: Node2D = PlayerUnitLine.instance()
-	for i in GameManager.unit_layout.size():
-		match i:
-			0:
-				line.unit1 = GameManager.unit_layout[i]
-			1:
-				line.unit2 = GameManager.unit_layout[i]
-			2:
-				line.unit3 = GameManager.unit_layout[i]
-			3:
-				line.unit4 = GameManager.unit_layout[i]
-			_:
-				GameManager.log_message("Unhandled unit layout", true)
-	
-	call_deferred("add_child", line)
+	pass
+
+func _physics_process(delta: float) -> void:
+	if global_position.distance_to(position_to) > MIN_MOVE_DISTANCE:
+		move_and_slide((position_to - global_position).normalized() * MOVE_SPEED)
 
 ###############################################################################
 # Connections                                                                 #
@@ -39,4 +30,14 @@ func _ready() -> void:
 # Public functions                                                            #
 ###############################################################################
 
+func skill_1() -> void:
+	pass
 
+func skill_2() -> void:
+	pass
+
+func skill_3() -> void:
+	pass
+
+func skill_4() -> void:
+	pass
