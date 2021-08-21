@@ -3,6 +3,7 @@ extends Node2D
 const PlayerUnitLine: Resource = preload("res://entities/player/player_unit_line.tscn")
 
 onready var units: Node = $Units
+onready var attacks: Node = $Attacks
 
 ###############################################################################
 # Builtin functions                                                           #
@@ -11,7 +12,7 @@ onready var units: Node = $Units
 func _ready() -> void:
 	SignalBroadcaster.current_level = self
 	
-	var line: Node2D = PlayerUnitLine.instance()
+	var line = PlayerUnitLine.instance()
 	for i in GameManager.unit_layout.size():
 		match i:
 			0:
@@ -25,6 +26,12 @@ func _ready() -> void:
 			_:
 				GameManager.log_message("Unhandled unit layout", true)
 	
+	line.screen = self
+	
+	call_deferred("add_child", line.unit1)
+	call_deferred("add_child", line.unit2)
+	call_deferred("add_child", line.unit3)
+	call_deferred("add_child", line.unit4)
 	call_deferred("add_child", line)
 
 ###############################################################################

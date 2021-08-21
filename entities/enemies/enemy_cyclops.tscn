@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entities/base_unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/entities/enemies/Cyclops.tres" type="Texture" id=2]
+[ext_resource path="res://entities/enemies/enemy_cyclops.gd" type="Script" id=3]
+
+[node name="EnemyCyclops" instance=ExtResource( 1 )]
+scale = Vector2( 5, 5 )
+script = ExtResource( 3 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( 0, -7 )
+texture = ExtResource( 2 )

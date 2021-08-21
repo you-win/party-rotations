@@ -1,26 +1,14 @@
-extends Node2D
-
-onready var units: Node = $Units
-onready var attacks: Node = $Attacks
+extends BasePlayerUnit
 
 ###############################################################################
 # Builtin functions                                                           #
 ###############################################################################
 
 func _ready() -> void:
-	var line = load("res://entities/player/player_unit_line.tscn").instance()
-	line.unit1 = load("res://entities/player/player_spearman.tscn").instance()
-	line.unit2 = load("res://entities/player/player_swordsman.tscn").instance()
-	line.unit3 = load("res://entities/player/player_mage.tscn").instance()
-	line.unit4 = load("res://entities/player/player_druid.tscn").instance()
-	
-	line.screen = self
-	
-	units.call_deferred("add_child", line.unit1)
-	units.call_deferred("add_child", line.unit2)
-	units.call_deferred("add_child", line.unit3)
-	units.call_deferred("add_child", line.unit4)
-	call_deferred("add_child", line)
+	skill_1_cd = 4.0
+	skill_2_cd = 5.0
+	skill_3_cd = 8.0
+	skill_4_cd = 25.0
 
 ###############################################################################
 # Connections                                                                 #
@@ -34,4 +22,39 @@ func _ready() -> void:
 # Public functions                                                            #
 ###############################################################################
 
+func skill_1() -> void:
+	"""
+	Dagger throw
+	
+	Throw a dagger at a given position
+	"""
+	.skill_1()
+	pass
 
+func skill_2() -> void:
+	"""
+	Encouragement
+	
+	Reduce cooldowns for the entire party by a small amount
+	"""
+	.skill_2()
+	pass
+
+func skill_3() -> void:
+	"""
+	Smoke bomb
+	
+	Throw a smoke bomb at a given position, granting invulnerability for
+	a short duration
+	"""
+	.skill_3()
+	pass
+
+func skill_4() -> void:
+	"""
+	Tactical reinforcement
+	
+	Call in reinforcements which will strike the given position in many lines
+	"""
+	.skill_4()
+	pass

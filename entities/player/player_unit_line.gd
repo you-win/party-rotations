@@ -1,6 +1,6 @@
 extends Node2D
 
-const POSITION_COUNTER_MAX: float = 0.25
+const POSITION_COUNTER_MAX: float = 0.1
 
 var update_position_counter: float = 0.0
 
@@ -12,11 +12,15 @@ var unit2: BasePlayerUnit
 var unit3: BasePlayerUnit
 var unit4: BasePlayerUnit
 
+var screen: Node2D
+
 ###############################################################################
 # Builtin functions                                                           #
 ###############################################################################
 
 func _ready() -> void:
+	GameManager.line = self
+	
 	current_unit = unit1
 	current_unit.is_current = true
 	
@@ -24,10 +28,16 @@ func _ready() -> void:
 	units.append(unit2)
 	units.append(unit3)
 	units.append(unit4)
+	
+	for unit in units:
+		unit.line = self
+		for unit_i in units:
+			(unit as PhysicsBody2D).add_collision_exception_with(unit_i)
 
 func _physics_process(delta: float) -> void:
-	if Input.is_action_pressed("primary_action"):
-		units[0].position_to = get_global_mouse_position()
+	if Input.is_action_pressed("secondary_action"):
+		current_unit.position_to = get_global_mouse_position()
+		current_unit.queued_skill = BasePlayerUnit.QueuedSkill.NONE
 	
 	update_position_counter += delta
 	if update_position_counter > POSITION_COUNTER_MAX:
@@ -48,13 +58,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		_set_current_unit(unit4)
 	
 	elif event.is_action_pressed("skill_1"):
-		current_unit.skill_1()
+		if not current_unit.is_skill_1_on_cd:
+			current_unit.queued_skill = BasePlayerUnit.QueuedSkill.SKILL_1
 	elif event.is_action_pressed("skill_2"):
-		current_unit.skill_2()
+		if not current_unit.is_skill_2_on_cd:
+			current_unit.queued_skill = BasePlayerUnit.QueuedSkill.SKILL_2
 	elif event.is_action_pressed("skill_3"):
-		current_unit.skill_3()
+		if not current_unit.is_skill_3_on_cd:
+			current_unit.queued_skill = BasePlayerUnit.QueuedSkill.SKILL_3
 	elif event.is_action_pressed("skill_4"):
-		current_unit.skill_4()
+		if not current_unit.is_skill_4_on_cd:
+			current_unit.queued_skill = BasePlayerUnit.QueuedSkill.SKILL_4
 
 ###############################################################################
 # Connections                                                                 #
@@ -65,6 +79,12 @@ func _unhandled_input(event: InputEvent) -> void:
 ###############################################################################
 
 func _set_current_unit(unit: BasePlayerUnit) -> void:
+	# Reset attributes on current unit
+	current_unit.is_current = false
+	current_unit.queued_skill = BasePlayerUnit.QueuedSkill.NONE
+	
+	# Transfer attributes to new unit
+	unit.position_to = current_unit.position_to
 	current_unit = unit
 	current_unit.is_current = true
 	units.erase(current_unit)
@@ -74,4 +94,5 @@ func _set_current_unit(unit: BasePlayerUnit) -> void:
 # Public functions                                                            #
 ###############################################################################
 
-
+func add_attack(node: BaseAttack) -> void:
+	screen.attacks.call_deferred("add_child", node)

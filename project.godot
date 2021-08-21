@@ -9,6 +9,16 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "BaseAttack",
+"language": "GDScript",
+"path": "res://entities/attacks/base_attack.gd"
+}, {
+"base": "BaseUnit",
+"class": "BaseEnemyUnit",
+"language": "GDScript",
+"path": "res://entities/enemies/base_enemy_unit.gd"
+}, {
 "base": "BaseUnit",
 "class": "BasePlayerUnit",
 "language": "GDScript",
@@ -20,6 +30,8 @@ _global_script_classes=[ {
 "path": "res://entities/base_unit.gd"
 } ]
 _global_script_class_icons={
+"BaseAttack": "",
+"BaseEnemyUnit": "",
 "BasePlayerUnit": "",
 "BaseUnit": ""
 }

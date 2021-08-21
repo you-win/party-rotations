@@ -19,6 +19,8 @@ format = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-zoom = Vector2( 0.5, 0.5 )
+zoom = Vector2( 0.3, 0.3 )
 
 [node name="Units" type="Node" parent="."]
+
+[node name="Attacks" type="Node" parent="."]
