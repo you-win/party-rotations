@@ -8,7 +8,7 @@ A game made with Godot 3.4 for the [Kenney Jam 2021](https://itch.io/jam/kenney-
 - [Impact Sounds](https://kenney.nl/assets/impact-sounds)
 
 ![Hooray for title screens!](TitleScreen.PNG)
-![Some gameplay I guess idk](GamePlay!.png)
+![Some gameplay I guess idk](GamePlay1.png)
 
 ### Controls
 - Right click: move unit
