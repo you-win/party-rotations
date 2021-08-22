@@ -6,6 +6,10 @@ const Thrust2: Resource = preload("res://entities/attacks/thrust2.tscn")
 
 const Dash: Resource = preload("res://entities/attacks/dash.tscn")
 
+const ThrowSpears: Resource = preload("res://entities/attacks/throw_spears.tscn")
+
+const GiantSpearBomb: Resource = preload("res://entities/attacks/giant_spear_bomb.tscn")
+
 export var dash_length: float = 100.0
 
 ###############################################################################
@@ -13,12 +17,12 @@ export var dash_length: float = 100.0
 ###############################################################################
 
 func _ready() -> void:
-#	skill_1_cd = 4.0
-	skill_1_cd = 1.0 # TODO
-#	skill_2_cd = 5.0
-	skill_2_cd = 1.0 # TODO
+	skill_1_cd = 4.0
+#	skill_1_cd = 1.0 # TODO
+	skill_2_cd = 5.0
+#	skill_2_cd = 1.0 # TODO
 	skill_3_cd = 5.0
-	skill_4_cd = 25.0
+	skill_4_cd = 20.0
 
 ###############################################################################
 # Connections                                                                 #
@@ -56,9 +60,9 @@ func skill_1() -> void:
 	
 	thrust.lifetime = 2.0
 	
-	thrust.damage = 2.0
+	thrust.damage = 2.0 * damage_multiplier
 	thrust.effect = AttackEffect.PUSH
-	thrust.data = thrust.initial_position
+	thrust.data = global_position
 	
 	line.add_attack(thrust)
 
@@ -105,7 +109,28 @@ func skill_3() -> void:
 	"""
 	.skill_3()
 	
+	var spears: Array = [
+		ThrowSpears.instance(),
+		ThrowSpears.instance(),
+		ThrowSpears.instance()
+	]
 	
+	var mouse_pos: Vector2 = get_global_mouse_position()
+	
+	for spear in spears:
+		spear.target_group = GameManager.ENEMY_GROUP
+		spear.initial_position = global_position
+		spear.initial_rotation = mouse_pos.angle_to_point(global_position)
+		spear.lifetime = 4.0
+	
+		spear.damage = 2.0 * damage_multiplier
+		spear.effect = AttackEffect.PUSH
+		spear.data = global_position
+		
+		spear.target_position = mouse_pos
+		
+		line.add_attack(spear)
+		yield(get_tree().create_timer(0.25), "timeout")
 
 func skill_4() -> void:
 	"""
@@ -114,4 +139,13 @@ func skill_4() -> void:
 	Call down a giant spear on a given position
 	"""
 	.skill_4()
-	pass
+	
+	var spear_bomb: BaseAttack = GiantSpearBomb.instance()
+	spear_bomb.target_group = GameManager.ENEMY_GROUP
+	spear_bomb.initial_position = get_global_mouse_position()
+	
+	spear_bomb.lifetime = 2.0
+	spear_bomb.damage = 30.0 * damage_multiplier
+	spear_bomb.effect = AttackEffect.NONE
+	
+	line.add_attack(spear_bomb)

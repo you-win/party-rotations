@@ -34,7 +34,17 @@ func _ready() -> void:
 		for unit_i in units:
 			(unit as PhysicsBody2D).add_collision_exception_with(unit_i)
 
+func _exit_tree() -> void:
+	for unit in units:
+		unit.queue_free()
+	units.clear()
+	
+	if screen:
+		screen.queue_free()
+
 func _physics_process(delta: float) -> void:
+	if units.empty():
+		return
 	if Input.is_action_pressed("secondary_action"):
 		current_unit.position_to = get_global_mouse_position()
 		current_unit.queued_skill = BasePlayerUnit.QueuedSkill.NONE

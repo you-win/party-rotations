@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://entities/attacks/base_attack.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/entities/attacks/shield.tres" type="Texture" id=3]
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 14.9831, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 13.672, 0 ) ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "Run"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 14.9831, 0 ), Vector2( 39.3306, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 13.672, 0 ), Vector2( 38.956, 0 ) ]
+}
+
+[node name="ShieldsUp" instance=ExtResource( 1 )]
+should_apply_damage = true
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( 14.9831, 0 )
+
+[node name="Sprite" parent="." index="1"]
+position = Vector2( 13.672, 0 )
+rotation = 1.57079
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/RESET = SubResource( 2 )
+anims/Run = SubResource( 1 )

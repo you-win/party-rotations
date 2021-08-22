@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://screens/combat/combat_screen.tscn" type="PackedScene" id=1]
+[ext_resource path="res://screens/combat/final_screen.gd" type="Script" id=2]
+[ext_resource path="res://entities/enemies/enemy_cyclops.tscn" type="PackedScene" id=3]
+[ext_resource path="res://entities/enemies/enemy_knight.tscn" type="PackedScene" id=4]
+
+[node name="FinalScreen" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+unit1_info_path = NodePath("")
+unit2_info_path = NodePath("")
+unit3_info_path = NodePath("")
+unit4_info_path = NodePath("")
+player_spawn_path = NodePath("")
+
+[node name="EnemyKnight" parent="Units" index="0" instance=ExtResource( 4 )]
+position = Vector2( -184.555, -57 )
+
+[node name="EnemyKnight2" parent="Units" index="1" instance=ExtResource( 4 )]
+position = Vector2( 180.313, -66.0682 )
+
+[node name="EnemyCyclops" parent="Units" index="2" instance=ExtResource( 3 )]
+position = Vector2( 0, -57 )

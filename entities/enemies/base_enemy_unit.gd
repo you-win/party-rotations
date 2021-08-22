@@ -1,6 +1,8 @@
 class_name BaseEnemyUnit
 extends BaseUnit
 
+signal killed
+
 enum State { NONE, IDLE, CHASE, ATTACK }
 
 var line
@@ -19,7 +21,7 @@ var is_state_locked := false
 func _ready() -> void:
 	add_to_group(GameManager.ENEMY_GROUP)
 	
-	if not GameManager.line:
+	while not GameManager.line:
 		yield(get_tree(), "idle_frame")
 	line = GameManager.line
 	
@@ -27,7 +29,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if health <= 0:
-		anim_player.play("Die")
+		is_state_locked = true
+		if anim_player.current_animation != "Die":
+			anim_player.play("Die")
+		return
 	
 	state_switch_count += delta
 	if state_switch_count > state_switch_num:

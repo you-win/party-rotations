@@ -22,7 +22,7 @@ var queued_skill: int = QueuedSkill.NONE
 
 var skill_1_cd: float
 var skill_1_counter: float = 0.0
-var is_skill_1_on_cd := true
+var is_skill_1_on_cd := false
 
 var skill_2_cd: float
 var skill_2_counter: float = 0.0
