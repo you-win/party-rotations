@@ -21,6 +21,6 @@ format = 1
 current = true
 zoom = Vector2( 0.3, 0.3 )
 
-[node name="Units" type="Node" parent="."]
+[node name="Units" type="YSort" parent="."]
 
-[node name="Attacks" type="Node" parent="."]
+[node name="Attacks" type="YSort" parent="."]

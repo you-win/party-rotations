@@ -88,6 +88,8 @@ func skill_2() -> void:
 	if global_position.distance_to(dash_pos) > dash_length:
 #		dash_pos = global_position + ((dash_pos - global_position).normalized() * dash_length) 
 		dash_pos = (dash_pos - global_position).normalized() * dash_length
+	else:
+		dash_pos = dash_pos - global_position
 	
 	# TODO just teleport for now
 	global_position += dash_pos

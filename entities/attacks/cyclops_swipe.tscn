@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entities/attacks/base_attack.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/entities/attacks/slash_effect1.tres" type="Texture" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Run"
+
+[node name="CyclopsSwipe" instance=ExtResource( 1 )]
+should_apply_damage = true
+
+[node name="Sprite" parent="." index="1"]
+rotation = 0.785397
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/Run = SubResource( 1 )

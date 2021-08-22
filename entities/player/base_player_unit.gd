@@ -54,7 +54,7 @@ func _physics_process(delta: float) -> void:
 			Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	
 	if global_position.distance_to(position_to) > spacing:
-		move_and_slide((position_to - global_position).normalized() * MOVE_SPEED)
+		move_and_slide((position_to - global_position).normalized() * MOVE_SPEED * 60 * delta)
 	
 	# Skill cooldown counters
 	# We don't use timers here since some skills manipulate cooldowns
